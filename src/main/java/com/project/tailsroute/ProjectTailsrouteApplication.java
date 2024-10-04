@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ProjectTailsrouteApplication {
 
 	public static void main(String[] args) {
-		System.out.println("Hello World");
+		System.out.println("test jsh");
 		SpringApplication.run(ProjectTailsrouteApplication.class, args);
 	}
 }
