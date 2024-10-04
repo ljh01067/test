@@ -7,9 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ProjectTailsrouteApplication {
 
 	public static void main(String[] args) {
-		System.out.println("안녕 나는 유건혁이야");
-		System.out.println("안녕 나는 유건혁이야");
-		System.out.println("안녕 나는 유건혁이야");
+		System.out.println("배고파");
+
 		SpringApplication.run(ProjectTailsrouteApplication.class, args);
 	}
 }
