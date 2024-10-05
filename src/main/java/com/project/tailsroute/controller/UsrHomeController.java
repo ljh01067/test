@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class UsrHomeController {
     @GetMapping("/usr/home/main")
     public String showMain(Model model) {
-        model.addAttribute("message", "연결성공");
+        model.addAttribute("message", "DB추가");
         return "usr/home/main";
 
     }
