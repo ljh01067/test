@@ -13,6 +13,7 @@ CREATE TABLE `member`(
                          `name` CHAR(20) NOT NULL COMMENT '오프라인 이름',
                          nickname CHAR(20) NOT NULL COMMENT '온라인 이름',
                          gender TINYINT(1) UNSIGNED NOT NULL COMMENT '성별 (0=여자, 1=남자)',
+                         cellphoneNum CHAR(20) NOT NULL COMMENT '전화번호',
                          delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴 여부 (0=탈퇴 전, 1=탈퇴 후)',
                          delDate DATETIME COMMENT '탈퇴 날짜'
 );
