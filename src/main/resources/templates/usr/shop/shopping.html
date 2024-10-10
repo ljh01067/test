@@ -1,50 +1,71 @@
+<th:block th:replace="usr/common/head"/>
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping</title>
-    <th:block th:include="usr/common/head :: header"></th:block>
     <style>
+        html{
+            background-color: #FFFEF0;
+        }
+        /*임시*/
+        #Calendar {
+
+        }
         /* 이미지 크기를 150px로 설정 */
         .product-image {
             width: auto; /* 너비는 자동으로 비율에 맞게 조정 */
             height: 150px; /* 높이를 150px로 설정 */
         }
-        /* 리스트 스타일 */
+
+        /* 결과 리스트 스타일 */
         #resultContainer {
             list-style-type: none; /* 기본 리스트 스타일 제거 */
             padding: 0; /* 패딩 제거 */
+            border: 1px solid #ccc; /* 전체 리스트에 테두리 추가 */
+            border-radius: 5px; /* 네모박스에 모서리 둥글게 */
+            overflow: hidden; /* 내부 내용이 넘치지 않게 설정 */
+            background-color: #F2F2EB;
         }
+
         /* 리스트 항목 스타일 */
         .product-item {
-            margin-bottom: 20px; /* 각 항목 간의 간격 설정 */
-            border: 1px solid #ccc; /* 테두리 추가 */
             padding: 10px; /* 내부 여백 설정 */
-            border-radius: 5px; /* 모서리 둥글게 */
+            border-bottom: 1px solid #ccc; /* 항목 사이에 선 추가 */
             display: flex; /* Flexbox 사용 */
             align-items: center; /* 세로 중앙 정렬 */
         }
+
+        /* 마지막 항목에서 하단 선 제거 */
+        .product-item:last-child {
+            border-bottom: none; /* 마지막 항목의 하단 선 제거 */
+        }
+
         /* 제목과 가격을 포함하는 컨테이너 스타일 */
         .product-info {
             margin-left: 10px; /* 이미지와의 간격 설정 */
         }
+
         /* 링크 스타일 */
         .product-info a {
             text-decoration: none; /* 밑줄 제거 */
             color: black; /* 텍스트 색상 (검정색) */
         }
+
         /* 가격 스타일 */
         .product-price {
             font-size: 1.5em; /* 글자 크기를 H3 정도로 설정 (약 1.5em) */
             margin: 0; /* 기본 마진 제거 */
         }
+
         /* 페이지네이션 스타일 */
         .pagination {
             margin-top: 20px; /* 페이지네이션과 상품 리스트 간격 */
             display: flex;
             justify-content: center; /* 중앙 정렬 */
         }
+
         .page-item {
             margin: 0 5px; /* 페이지 아이템 간격 */
             cursor: pointer; /* 커서 포인터 */
@@ -52,9 +73,15 @@
             border: 1px solid #ccc; /* 테두리 */
             border-radius: 5px; /* 모서리 둥글게 */
         }
-        .active {
-            background-color: #007BFF; /* 활성화된 페이지 배경 색상 */
-            color: white; /* 활성화된 페이지 텍스트 색상 */
+        button {
+            background: none; /* 버튼 배경 제거 */
+            border: none; /* 버튼 테두리 제거 */
+            cursor: pointer; /* 커서 포인터 */
+            padding: 5px 10px; /* 여백 설정 */
+        }
+        #sortButtons {
+            display: flex;
+            justify-content: flex-end; /* 버튼들을 오른쪽에 배치 */
         }
     </style>
 </head>
@@ -64,8 +91,10 @@
 <div id="List"></div>
 <div id="recommend">
     <!-- 버튼 추가 -->
+    <div id="sortButtons">
     <button id="sortByAccuracy">정확도순</button>
     <button id="sortByPrice">최저가순</button>
+    </div>
 
     <!-- 검색 결과를 표시할 곳 -->
     <ul id="resultContainer"></ul> <!-- ul로 변경 -->
