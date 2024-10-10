@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class UsrHospitalController {
     @GetMapping("/usr/hospital/main")
     public String showMain(Model model) {
-        // model.addAttribute("message", "DB추가");
+        model.addAttribute("message", "24시간 병원 message 추가");
         return "usr/map/hospital";
 
     }
