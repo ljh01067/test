@@ -20,4 +20,11 @@ public class UsrHomeController {
         return "usr/member/login";
 
     }
+
+    @GetMapping("/usr/shop/shopping")
+    public String showShopping(Model model) {
+        model.addAttribute("message", "DB추가");
+        return "usr/shop/shopping";
+
+    }
 }
