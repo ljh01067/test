@@ -16,4 +16,9 @@ public class UsrDiaryController {
         model.addAttribute("list","다이어리");
         return "usr/diary/write";
     }
+    @GetMapping("/usr/calender/calender")
+    public String calander(Model model){
+        model.addAttribute("list","켈린더");
+        return "usr/calender/calender";
+    }
 }
