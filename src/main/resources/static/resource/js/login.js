@@ -3,38 +3,31 @@ import {createRoot} from 'react-dom/client';
 import {Button, TextField, Container, Typography, Box, Divider, Link} from '@mui/material';
 
 function LoginForm() {
-    const [loginId, setLoginId] = useState('');  // 상태로 loginId 관리
-    const [loginPw, setLoginPw] = useState('');  // 상태로 loginPw 관리
+    const [loginId, setLoginId] = useState('');
+    const [loginPw, setLoginPw] = useState('');
 
     const checkLogin = async (e) => {
-        e.preventDefault();  // 기본 폼 제출 동작 방지
+        e.preventDefault();
         const formData = {
-            loginId: loginId,  // 상태에서 loginId 값 가져오기
-            loginPw: loginPw   // 상태에서 loginPw 값 가져오기
+            loginId: loginId,
+            loginPw: loginPw
         };
-
-        console.log('loginId:', loginId);  // loginId 값 확인
-        console.log('loginPw:', loginPw);  // loginPw 값 확인
 
         try {
             const response = await fetch('/usr/member/doLogin', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',  // JSON 형식으로 전송
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),  // JSON으로 데이터 전송
+                body: JSON.stringify(formData),
             });
 
             if (response.ok) {
                 const data = await response.json();
-                alert('로그인 성공: ' + data);  // 성공 메시지 출력
+                alert('로그인 성공: ' + data);
 
             } else {
                 alert('로그인 실패: 아이디 또는 비밀번호가 잘못되었습니다.');
-
-                // 폼 필드 초기화
-                const form = document.forms['login'];
-                form.reset();
             }
         } catch (error) {
             console.error('로그인 중 오류가 발생했습니다:', error);
