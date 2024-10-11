@@ -673,6 +673,18 @@ video {
   width: 100%;
 }
 
+.tw-w-\[300px\] {
+  width: 300px;
+}
+
+.tw-w-\[200px\] {
+  width: 200px;
+}
+
+.tw-w-\[190px\] {
+  width: 190px;
+}
+
 .tw-flex-1 {
   flex: 1 1 0%;
 }

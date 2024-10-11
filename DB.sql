@@ -108,15 +108,6 @@ CREATE TABLE `dog`(
 
 );
 
-SELECT M.*, D.photo
-FROM `member` M
-         LEFT JOIN dog D
-                   ON D.memberId = M.id
-WHERE M.loginId = "asd";
-
-SELECT *
-FROM dog;
-
 ## 게시글 테이블
 CREATE TABLE article(
                         id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '식별번호',
@@ -219,3 +210,9 @@ CREATE TABLE doghealth(
 ##############################################
 
 SELECT * FROM `member`;
+
+SELECT M.*, D.photo extra__dogPoto FROM `member` M LEFT JOIN dog D ON D.memberId = M.id WHERE M.loginId = "asd";
+
+SELECT * FROM dog;
+
+SELECT * FROM missing;
