@@ -14,10 +14,4 @@ public class UsrHomeController {
 
     }
 
-    @GetMapping("/usr/member/login")
-    public String showLogin(Model model) {
-        model.addAttribute("message", "DB추가");
-        return "usr/member/login";
-
-    }
 }
