@@ -10,7 +10,7 @@ import java.util.*;
 @Controller
 public class UsrMapController {
 
-    // 시와 군/구 데이터를 하드코딩
+    // 시/도와 군/구 데이터를 하드코딩
     private Map<String, List<String>> cityCountyMap = new HashMap<>();
 
     public UsrMapController() {
