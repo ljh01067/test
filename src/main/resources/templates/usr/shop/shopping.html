@@ -5,26 +5,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping</title>
-    <link rel="stylesheet" href="https://unpkg.com/react-calendar/dist/Calendar.css">
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
     <style>
         html {
             background-color: #FFFEF0;
         }
-        /*임시*/
-        #Calendar {
+        /* body 요소에 좌우 여백 추가 */
+        body {
+            margin: 0 100px; /* 좌우 여백 100px 설정 */
+        }
+
+        /* Flexbox를 사용하여 두 요소를 정렬하는 부모 요소 */
+        .flex-container {
+            display: flex; /* Flexbox 사용 */
+            justify-content: space-between; /* 양쪽 끝으로 배치 */
+            margin: 20px; /* 여백 추가 */
+        }
+        /* calendar 스타일 */
+        #calendar {
             border: 1px solid #ccc;
-            height: auto; /* 자동 높이 설정 */
-            width: 300px; /* 적절한 너비 설정 */
+            height: 600px; /* 자동 높이 설정 */
+            width: 800px; /* 적절한 너비 설정 */
             border-radius: 5px;
             background-color: #F2F2EB;
             padding: 10px; /* 내부 여백 추가 */
             position: relative; /* 자식 요소의 절대 위치를 위한 상대 위치 */
         }
-        /*임시*/
+        /* list 스타일 */
         #List {
             border: 1px solid #ccc;
             height: 600px;
-            width: 600px;
+            width: 800px;
             border-radius: 5px; /* 네모박스에 모서리 둥글게 */
             background-color: #F2F2EB;
         }
@@ -94,32 +105,25 @@
 </head>
 <body>
 <div id="root"></div>
-<script type="module">
-    import React from 'https://unpkg.com/react@17/umd/react.development.js';
-    import ReactDOM from 'https://unpkg.com/react-dom@17/umd/react-dom.development.js';
-    import Calendar from 'https://cdn.jsdelivr.net/npm/react-calendar/dist/umd/react-calendar.development.js';
-    const { useState } = React;
-
-    function App() {
-        const [date, setDate] = useState(new Date());
-
-        const handleDateChange = (newDate) => {
-            setDate(newDate);
-            console.log(newDate);
-        };
-
-        return (
-            <>
-                <div>
-                    <Calendar onChange={handleDateChange} value={date} />
-                </div>
-            </>
-        );
-    }
-
-    ReactDOM.render(<App />, document.getElementById('root'));
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'ko',
+        });
+        calendar.render();
+    });
 </script>
-<div id="List"></div>
+<script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+<!-- Flexbox 컨테이너 추가 -->
+<div class="flex-container">
+    <div id='calendar'></div>
+    <div id="List"></div>
+</div>
+
 <div id="recommend">
     <!-- 버튼 추가 -->
     <div id="sortButtons">
@@ -183,7 +187,6 @@
                         </div>`;
                 resultContainer.appendChild(productItem); // 리스트에 추가
             });
-
         }
 
         // 페이지네이션 설정 함수
@@ -191,9 +194,6 @@
             const pageCount = Math.ceil(totalItems / itemsPerPage);
             const pageInfo = document.getElementById("pageInfo");
             pageInfo.innerHTML = `${currentPage} / ${pageCount}`; // 현재 페이지 정보 표시
-
-            document.getElementById("prevPage").style.display = currentPage === 1 ? 'none' : 'inline';
-            document.getElementById("nextPage").style.display = currentPage === pageCount ? 'none' : 'inline';
         }
 
         // 페이지 변경 함수
@@ -204,26 +204,23 @@
             } else if (direction === 'prev' && currentPage > 1) {
                 currentPage--;
             }
-            displayResults(products); // 결과 재표시
-            setupPagination(products.length); // 페이지네이션 재설정
+            displayResults(products); // 필터링된 결과를 다시 표시
+            setupPagination(products.length); // 페이지네이션 정보 업데이트
         }
 
-        // 이전 페이지 버튼 클릭 이벤트
+        // 버튼 클릭 이벤트 설정
+        document.getElementById("nextPage").addEventListener("click", () => changePage('next'));
         document.getElementById("prevPage").addEventListener("click", () => changePage('prev'));
 
-        // 다음 페이지 버튼 클릭 이벤트
-        document.getElementById("nextPage").addEventListener("click", () => changePage('next'));
-
-        // 정확도순 정렬 버튼 클릭 이벤트
+        // 정렬 기능 설정
         document.getElementById("sortByAccuracy").addEventListener("click", () => {
-            products.sort((a, b) => a.accuracy - b.accuracy); // 정확도 순으로 정렬
-            displayResults(products); // 결과 재표시
+            products.sort((a, b) => a.accuracy - b.accuracy); // 정확도순 정렬
+            displayResults(products); // 정렬된 결과 표시
         });
 
-        // 최저가순 정렬 버튼 클릭 이벤트
         document.getElementById("sortByPrice").addEventListener("click", () => {
-            products.sort((a, b) => a.price - b.price); // 가격 순으로 정렬
-            displayResults(products); // 결과 재표시
+            products.sort((a, b) => a.lprice - b.lprice); // 가격순 정렬
+            displayResults(products); // 정렬된 결과 표시
         });
     </script>
 </div>
