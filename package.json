@@ -4,9 +4,7 @@
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.13"
   },
-
   "scripts": {
-    "build:css": "npx tailwindcss -i ./src/main/resources/static/css/tailwind.css -o ./src/main/resources/static/css/output.css --watch"
+    "build": "tailwindcss -i ./src/main/resources/static/resource/styles.css -o ./src/main/resources/static/resource/dist/styles.css --watch"
   }
 }
-
