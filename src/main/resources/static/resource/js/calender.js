@@ -9,16 +9,12 @@ document.addEventListener('DOMContentLoaded', function() {
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        events: [ // 기본 이벤트 추가
+        events: [
+            // 서버에서 받은 날짜 데이터를 여기에 추가
             {
-                title: 'Event 1',
-                start: '2024-10-01'
+                title: '복용 시작일', // 예시 제목
+                start: '2023-10-12', // 입력된 날짜
             },
-            {
-                title: 'Event 2',
-                start: '2024-10-05',
-                end: '2024-10-07'
-            }
         ]
     });
     calendar.render(); // 캘린더 렌더링
