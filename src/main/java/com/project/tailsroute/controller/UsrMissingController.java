@@ -39,6 +39,8 @@ public class UsrMissingController {
         if (isLogined) {
             Member member = rq.getLoginedMember();
             model.addAttribute("member", member);
+        } else{
+            return "redirect:/usr/member/login";
         }
 
         model.addAttribute("isLogined", isLogined);
@@ -92,6 +94,10 @@ public class UsrMissingController {
         model.addAttribute("isLogined", isLogined);
 
         Missing missing = missingService.missingArticle(missingId);
+
+        if (rq.getLoginedMemberId() != missing.getMemberId()) {
+            return "redirect:/usr/missing/list";
+        }
 
         model.addAttribute("missing", missing);
 
