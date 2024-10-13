@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { createRoot } from 'react-dom/client';
-import { Button, TextField, Container, Typography, Box, Divider, Link } from '@mui/material';
+import React, {useState} from 'react';
+import {createRoot} from 'react-dom/client';
+import {Button, TextField, Container, Typography, Box, Divider, Link} from '@mui/material';
 import Head from './head'; // 헤더 컴포넌트 import
 
 function LoginForm() {
@@ -9,31 +9,34 @@ function LoginForm() {
 
     const checkLogin = async (e) => {
         e.preventDefault();
-        const formData = {
-            loginId: loginId,
-            loginPw: loginPw
-        };
+
+        // URL 인코딩 방식으로 데이터 생성
+
+        const formData = new URLSearchParams();
+        formData.append('loginId', loginId);
+        formData.append('loginPw', loginPw);
 
         try {
             const response = await fetch('/usr/member/doLogin', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: JSON.stringify(formData),
+                body: formData.toString(),
             });
 
-            if (response.ok) {
-                const data = await response.json();
-                alert('로그인 성공: ' + data);
-            } else {
-                alert('로그인 실패: 아이디 또는 비밀번호가 잘못되었습니다.');
+            const data = await response.json();
+
+            // jsAction에 포함된 JavaScript 코드 실행
+            if (data.jsAction) {
+                eval(data.jsAction);
             }
         } catch (error) {
             console.error('로그인 중 오류가 발생했습니다:', error);
             alert('로그인 중 오류가 발생했습니다.');
         }
     };
+
 
     return (
         <Box sx={{
@@ -50,10 +53,10 @@ function LoginForm() {
                 </Typography>
                 <form id="login" method="POST" action="/usr/member/doLogin" onSubmit={checkLogin}>
                     <TextField label="아이디" name="loginId" variant="outlined" fullWidth margin="normal"
-                               color="success" onChange={(e) => setLoginId(e.target.value)} />
+                               color="success" onChange={(e) => setLoginId(e.target.value)}/>
                     <TextField label="비밀번호" name="loginPw" type="password" variant="outlined" fullWidth
                                margin="normal"
-                               color="success" onChange={(e) => setLoginPw(e.target.value)} />
+                               color="success" onChange={(e) => setLoginPw(e.target.value)}/>
                     <Box display="flex" justifyContent="flex-end" mt={2}>
                         <Button variant="contained" color="success" type="submit">
                             로그인
@@ -69,15 +72,15 @@ function LoginForm() {
                     </Typography>
                 </Box>
                 <Box display="flex" alignItems="center" mt={2}>
-                    <Divider sx={{ flexGrow: 1 }} />
-                    <Typography variant="body2" sx={{ mx: 2 }}>
+                    <Divider sx={{flexGrow: 1}}/>
+                    <Typography variant="body2" sx={{mx: 2}}>
                         or
                     </Typography>
-                    <Divider sx={{ flexGrow: 1 }} />
+                    <Divider sx={{flexGrow: 1}}/>
                 </Box>
                 <Box textAlign="center" mt={2}>
                     <Button variant="outlined" color="success" fullWidth
-                            sx={{ textTransform: 'none', borderColor: '#d3d3d3', color: "success" }}>
+                            sx={{textTransform: 'none', borderColor: '#d3d3d3', color: "success"}}>
                         Sign in with Google
                     </Button>
                 </Box>
@@ -87,11 +90,11 @@ function LoginForm() {
 }
 
 // 헤더 컴포넌트를 별도로 렌더링
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const headRootElement = document.getElementById('head-root');
     if (headRootElement) {
         const headRoot = createRoot(headRootElement);
-        headRoot.render(<Head />);
+        headRoot.render(<Head/>);
     } else {
         console.error("Target container 'head-root' not found.");
     }
@@ -100,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const rootElement = document.getElementById('login-root');
     if (rootElement) {
         const root = createRoot(rootElement);
-        root.render(<LoginForm />);
+        root.render(<LoginForm/>);
     } else {
         console.error("Target container 'login-root' not found.");
     }
