@@ -82,6 +82,18 @@ INSERT INTO `member` SET
                          cellphoneNum = '010-5555-6666',
                          delStatus = 0;
 
+INSERT INTO `member` SET
+    regDate = '2024-07-22 12:20:00',
+                         updateDate = '2024-08-01 12:40:00',
+                         loginId = 'asd',
+                         loginPw = 'asd',
+                         authLevel = 3,
+                         `name` = '유은희',
+                         nickname = '꾸미엄마',
+                         gender = 0,
+                         cellphoneNum = '010-7698-1532',
+                         delStatus = 0;
+
 
 ## 반려견 테이블
 CREATE TABLE `dog`(
@@ -91,36 +103,9 @@ CREATE TABLE `dog`(
                       memberId INT(10) UNSIGNED NOT NULL COMMENT '주인 식별번호',
                       `name` CHAR(20) DEFAULT '이름 없음' COMMENT '이름',
                       weight INT(10) DEFAULT -1 COMMENT '체중 (-1=모름)',
-                      photo TEXT DEFAULT '기본 사진 url' COMMENT '사진',
-                      dogType INT(10) NOT NULL COMMENT '1=골든 리트리버,
-					2=그레이트 데인,
-					3=닥스훈트,
-					4=달마시안,
-					5=도베르만,
-					6=래브라도 리트리버,
-					7=로트와일러,
-					8=말티즈,
-					9=보더 콜리,
-					10=비글,
-					11=비숑,
-					12=사모예드,
-					13=셰퍼드,
-					14=슈나우저,
-					15=시바 이누,
-					16=시베리안 허스키,
-					17=시츄,
-					18=웰시 코기,
-					19=잉글리시 코커 스패니얼,
-					20=진돗개&풍산개,
-					21=치와와,
-					22=테리어,
-					23=퍼그,
-					24=포메라니안,
-					25=푸들,
-					26=프렌치 불독,
-					27=핀셔,
-					28=하운드,
-					29=기타'
+                      photo CHAR(50) COMMENT '사진',
+                      `type` CHAR(20) NOT NULL COMMENT '소형, 중형, 대형'
+
 );
 
 ## 게시글 테이블
@@ -199,11 +184,17 @@ CREATE TABLE medicationLog (
 ##실종 테이블
 CREATE TABLE missing(
                         id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '식별번호',
-                        memberId INT(10) UNSIGNED NOT NULL COMMENT 'member번호',
-                        dogId INT(10) UNSIGNED NOT NULL COMMENT 'dog번호',
+                        memberId INT(10) UNSIGNED NOT NULL COMMENT '신고자 식별번호',
+                        `name` CHAR(30) NOT NULL COMMENT '강아지 이름',
                         reportDate DATETIME NOT NULL COMMENT '실종 날짜',
                         missingLocation VARCHAR(100) NOT NULL COMMENT '실종 장소',
-                        howToLost TEXT NOT NULL COMMENT '잃어버린 경위'
+                        breed CHAR(30) NOT NULL COMMENT '품종',
+                        color CHAR(30) NOT NULL COMMENT '색상',
+                        gender CHAR(30) NOT NULL COMMENT '성별',
+                        age CHAR(30) NOT NULL COMMENT '나이',
+                        photo TEXT NOT NULL COMMENT '사진',
+                        RFID CHAR(30) NOT NULL COMMENT '마이크로칩 번호',
+                        trait TEXT NOT NULL COMMENT '특징'
 );
 
 ##건강기록 테이블
@@ -219,3 +210,9 @@ CREATE TABLE doghealth(
 ##############################################
 
 SELECT * FROM `member`;
+
+SELECT M.*, D.photo extra__dogPoto FROM `member` M LEFT JOIN dog D ON D.memberId = M.id WHERE M.loginId = "asd";
+
+SELECT * FROM dog;
+
+SELECT * FROM missing;
