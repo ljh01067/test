@@ -7,9 +7,9 @@
 <body>
 <div class="title">실종신고 글작성</div>
 <div class="profile tw-p-5">
-    <div class="profile_title">사용자 정보</div>
+    <div class="profile_title" th:text="${member.nickname}">사용자 정보</div>
 </div>
-<form action="/usr/missing/write" method="post" enctype="multipart/form-data">
+<form action="/usr/missing/doWrite" method="post" enctype="multipart/form-data">
 
     <div class="drop_area tw-relative">
         <button type="button" class="image_button">이미지 업로드</button>
@@ -23,7 +23,7 @@
     <div class="dogAdd_body tw-p-5">
         <div class="tw-mt-5 tw-mb-5">
             <label for="reportDate">실종날짜</label>
-            <input type="date" class="tw-border-box" id="reportDate" name="reportDate" required><br>
+            <input type="date" class="tw-border-box tw-w-[190px] tw-text-center" id="reportDate" name="reportDate" required><br>
         </div>
         <div class="tw-mt-5 tw-mb-5">
             <label for="reportTime">실종시간</label>
@@ -58,7 +58,7 @@
         </div>
         <div class="tw-mt-5 tw-mb-5">
             <label for="age">나이 (개월)</label>
-            <input type="number" class="tw-border-box" id="age" name="age" min="0" max="2147483646"><br>
+            <input type="number" class="tw-border-box tw-w-[145px]" id="age" name="age" min="0" max="2147483646"><br>
         </div>
         <div class="tw-mt-5 tw-mb-5">
             <label for="RFID">마이크로칩(RFID)번호</label>
