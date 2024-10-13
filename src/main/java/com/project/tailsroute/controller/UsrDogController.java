@@ -59,7 +59,6 @@ public class UsrDogController {
 
                 photoPath = "/resource/photo/dog" + number + ".png"; // 웹에서 접근할 수 있는 경로
             } catch (IOException e) {
-                System.err.println("사진 올리기 실패 : "+e.getMessage());
                 return "redirect:/usr/dog/add";
             }
         }

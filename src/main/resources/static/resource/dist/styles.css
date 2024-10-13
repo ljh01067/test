@@ -588,6 +588,10 @@ video {
   }
 }
 
+.tw-fixed {
+  position: fixed;
+}
+
 .tw-absolute {
   position: absolute;
 }
@@ -598,6 +602,14 @@ video {
 
 .tw-right-0 {
   right: 0px;
+}
+
+.tw-z-20 {
+  z-index: 20;
+}
+
+.tw-z-30 {
+  z-index: 30;
 }
 
 .tw-mx-auto {
@@ -617,6 +629,22 @@ video {
   margin-bottom: 10px;
 }
 
+.tw-mb-\[12px\] {
+  margin-bottom: 12px;
+}
+
+.tw-mb-\[5px\] {
+  margin-bottom: 5px;
+}
+
+.tw-ml-\[12px\] {
+  margin-left: 12px;
+}
+
+.tw-mr-\[30px\] {
+  margin-right: 30px;
+}
+
 .tw-mt-5 {
   margin-top: 1.25rem;
 }
@@ -627,6 +655,10 @@ video {
 
 .tw-block {
   display: block;
+}
+
+.tw-inline-block {
+  display: inline-block;
 }
 
 .tw-flex {
@@ -645,6 +677,10 @@ video {
   height: 350px;
 }
 
+.tw-h-\[45px\] {
+  height: 45px;
+}
+
 .tw-h-\[60px\] {
   height: 60px;
 }
@@ -657,12 +693,28 @@ video {
   width: 100px;
 }
 
+.tw-w-\[145px\] {
+  width: 145px;
+}
+
+.tw-w-\[160px\] {
+  width: 160px;
+}
+
 .tw-w-\[170px\] {
   width: 170px;
 }
 
+.tw-w-\[190px\] {
+  width: 190px;
+}
+
 .tw-w-\[400px\] {
   width: 400px;
+}
+
+.tw-w-\[45px\] {
+  width: 45px;
 }
 
 .tw-w-\[700px\] {
@@ -671,18 +723,6 @@ video {
 
 .tw-w-full {
   width: 100%;
-}
-
-.tw-w-\[300px\] {
-  width: 300px;
-}
-
-.tw-w-\[200px\] {
-  width: 200px;
-}
-
-.tw-w-\[190px\] {
-  width: 190px;
 }
 
 .tw-flex-1 {
@@ -757,12 +797,25 @@ video {
   background-color: rgb(255 243 205 / var(--tw-bg-opacity));
 }
 
+.tw-bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.tw-p-2 {
+  padding: 0.5rem;
+}
+
 .tw-p-2\.5 {
   padding: 0.625rem;
 }
 
 .tw-p-5 {
   padding: 1.25rem;
+}
+
+.tw-p-\[10px\] {
+  padding: 10px;
 }
 
 .tw-px-5 {
@@ -775,8 +828,40 @@ video {
   padding-bottom: 0.5rem;
 }
 
+.tw-pb-\[9px\] {
+  padding-bottom: 9px;
+}
+
+.tw-pl-5 {
+  padding-left: 1.25rem;
+}
+
+.tw-pl-\[10px\] {
+  padding-left: 10px;
+}
+
+.tw-pl-\[20px\] {
+  padding-left: 20px;
+}
+
+.tw-pl-\[9px\] {
+  padding-left: 9px;
+}
+
+.tw-pr-\[10px\] {
+  padding-right: 10px;
+}
+
+.tw-pr-\[20px\] {
+  padding-right: 20px;
+}
+
 .tw-text-center {
   text-align: center;
+}
+
+.tw-text-right {
+  text-align: right;
 }
 
 .tw-text-2xl {
@@ -784,9 +869,17 @@ video {
   line-height: 2rem;
 }
 
+.tw-text-\[50px\] {
+  font-size: 50px;
+}
+
 .tw-text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
+}
+
+.tw-font-bold {
+  font-weight: 700;
 }
 
 .tw-text-\[\#4D3E3E\] {
