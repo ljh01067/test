@@ -11,10 +11,14 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/api")
 public class PlacesController {
 
-    private final String API_KEY = "REDACTED";
+    private final String API_KEY = "YOUR_API_KEY";
 
     @GetMapping("/places")
-    public ResponseEntity<String> getPlaces(@RequestParam String location, @RequestParam String radius, @RequestParam String type) {
+    public ResponseEntity<String> getPlaces(
+            @RequestParam String location,
+            @RequestParam String radius,
+            @RequestParam String type)
+    {
         String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + location + "&radius=" + radius + "&type=" + type + "&key=" + API_KEY;
 
         System.out.println(url);
