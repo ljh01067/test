@@ -120,12 +120,19 @@ function geocodeAddress() {
 function findAnimalHospitals(location) {
     const lat = location.lat();
     const lng = location.lng();
-    const radius = 5000;
-    const type = 'veterinary_care';
 
-    // 백엔드로 요청 보내기
+    // const apiKey = 'REDACTED';  // 본인의 API 키 입력
+
+    const radius = 5000;  // 검색 반경 (단위: 미터)
+    const type = 'veterinary_care';  // 동물 병원 검색
+
+    // 클라이언트에서 직접 호출
+    // const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=${radius}&type=${type}&key=${apiKey}`;
+
+    // 서버 측에서 Google Places API 호출
     const url = `/api/places?location=${lat},${lng}&radius=${radius}&type=${type}`;
 
+    // Fetch API를 사용하여 HTTP 요청 보내기
     fetch(url)
         .then(response => response.json())
         .then(data => {
