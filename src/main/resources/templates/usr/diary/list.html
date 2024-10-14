@@ -2,49 +2,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
+<!--테일윈드 적용-->
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 <!--켈린더.js 사용경로적용-->
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-<!--켈린더 css 경로적용-->
-<link rel="stylesheet" href="/resource/css/calender.css">
+<!--리스트 css 경로적용-->
+<link rel="stylesheet" href="/resource/css/diary/DiaryList.css">
 <head>
     <meta charset="UTF-8">
     <title>PetdiaryList</title>
 </head>
 <body>
-<!--켈린더 불러오기-->
-<h1>켈린더</h1>
-<div id="calendar"></div>
-<script src="/resource/js/calender.js"></script>
-<h2>일지작성 리스트</h2>
-<div class="p-4">
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">번호</th>
-            <th scope="col">작성일</th>
-            <th scope="col">제목</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>2024.10.07</td>
-            <td>제목1</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-        </tr>
-        </tbody>
-    </table>
 
+<!-- 페이지 명 -->
+<div class="container mx-auto mt-8">
+    <h1 class="text-center text-4xl font-bold mb-6">반려견 성장 기록</h1>
+    <hr class="mb-6">
 </div>
+<!-- 메인컨테이너-->
+<section class="container mx-auto flex justify-center items-start space-x-8">
+
+    <!-- 켈린더 -->
+    <div id="calendar"></div>
+        <script src="/resource/js/calender.js"></script>
+
+     <!--필터-->
+    <div class="mb-4 flex justify-between items-center">
+        <span class="text-lg font-semibold">최신순</span>
+    </div>
+    <!-- 기록 리스트 페이지-->
+    <div class="diaryList">
+        <table class="min-w-full table-auto">
+            <thead>
+            <tr>
+                <th class="px-4 py-2 text-gray-500 border-b-2">날짜</th>
+                <th class="px-4 py-2 text-gray-500 border-b-2">제목</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="diary : ${diaries}">
+                <td class="px-4 py-2 text-gray-700 border-b" th:text="${diary.regDate}">작성일</td>
+                <td class="px-4 py-2 hover:underline border-b">
+                    <a th:href="@{/usr/diary/detail(id=${diary.id})}" th:text="${diary.title}">제목</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <a href="/usr/diary/write" class="text-sm hover:underline">새 글 작성</a>
+    </div>
+</section>
+
 </body>
 </html>
