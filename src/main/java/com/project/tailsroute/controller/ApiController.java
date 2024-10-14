@@ -16,9 +16,8 @@ public class ApiController {
     }
 
     @GetMapping("/searchProducts")
-    public ResponseEntity<?> searchProducts(@RequestParam String query) {
+    public ResponseEntity<?> searchProducts(@RequestParam(name = "query") String query) {
         String result = apiService.searchProducts(query);
-        // JSON 형태로 결과 반환
         return ResponseEntity.ok(result);
     }
 }
