@@ -5,9 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
         initialView: 'dayGridMonth', // 기본 보기를 월간 그리드로 설정
         locale: 'ko', // 한국어 설정
         headerToolbar: {
-            left: 'prev,next today',
+            right: 'prev,next today',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            left: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
         events: [
             // 서버에서 받은 날짜 데이터를 여기에 추가

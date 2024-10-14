@@ -3,7 +3,9 @@ package com.project.tailsroute.repository;
 import com.project.tailsroute.vo.Diary;
 import org.apache.ibatis.annotations.*;
 
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Mapper
@@ -32,15 +34,15 @@ public interface DiaryRepository {
             memberId = #{memberId},
             title = #{title},
             `body` = #{body},
-            imageUrl = #{imageUrl},
+            imagePath = #{imagePath},
             startDate = #{startDate},
             endDate = #{endDate},
             takingTime = #{takingTime},
             information = #{information}
             """)
-	void writeDiary(int memberId, String title, String body, String imageUrl,
-					LocalDateTime startDate, LocalDateTime endDate,
-					LocalDateTime takingTime, String information);
+	void writeDiary(int memberId, String title, String body, String imagePath,
+					LocalDate startDate, LocalDate endDate,
+					LocalTime takingTime, String information);
 
 	@Delete("""
             DELETE FROM diary
@@ -53,16 +55,16 @@ public interface DiaryRepository {
             SET updateDate = NOW(),
             title = #{title},
             `body` = #{body},
-            imageUrl = #{imageUrl},
+            imagePath = #{imagePath},
             startDate = #{startDate},
             endDate = #{endDate},
             takingTime = #{takingTime},
             information = #{information}
             WHERE id = #{id}
             """)
-	void modifyDiary(int id, String title, String body, String imageUrl,
-					 LocalDateTime startDate, LocalDateTime endDate,
-					 LocalDateTime takingTime, String information);
+	void modifyDiary(int id, String title, String body, String imagePath,
+					 LocalDate startDate, LocalDate endDate,
+					 LocalTime takingTime, String information);
 
 	@Select("""
             SELECT D.*, M.nickname AS extra__writer

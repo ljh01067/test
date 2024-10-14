@@ -18,7 +18,7 @@ public class Diary {
     private int memberId;
     private String title;
     private String body;
-    private String imageUrl;
+    private String imagePath;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private LocalDateTime TakingTime;
