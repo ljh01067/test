@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/api")
 public class PlacesController {
 
-    private final String API_KEY = "REDACTED";
+    private final String API_KEY = "YOUR_API_KEY";
 
     @GetMapping("/places")
     public ResponseEntity<String> getPlaces(

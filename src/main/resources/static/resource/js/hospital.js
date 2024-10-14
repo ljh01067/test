@@ -121,7 +121,7 @@ function findAnimalHospitals(location) {
     const lat = location.lat();
     const lng = location.lng();
 
-    // const apiKey = 'REDACTED';  // 본인의 API 키 입력
+    // const apiKey = 'YOUR_API_KEY';  // 본인의 API 키 입력
 
     const radius = 5000;  // 검색 반경 (단위: 미터)
     const type = 'veterinary_care';  // 동물 병원 검색
@@ -152,7 +152,7 @@ function findAnimalHospitals(location) {
 //     const lat = location.lat();
 //     const lng = location.lng();
 //
-//     const apiKey = 'REDACTED'; // 본인의 API 키 입력
+//     const apiKey = 'YOUR_API_KEY'; // 본인의 API 키 입력
 //     const radius = 5000; // 검색 반경 (단위: 미터)
 //     const type = 'veterinary_care'; // 동물 병원 검색
 //
