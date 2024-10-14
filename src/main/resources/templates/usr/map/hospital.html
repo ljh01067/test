@@ -10,6 +10,7 @@
 
     <!--  헤더 파일 추가  -->
 <!--    <th:block th:include="usr/common/head :: header"></th:block>-->
+<!--    <th:block th:replace="usr/common/head"/>-->
 
 </head>
 <body>
@@ -17,23 +18,48 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="/resource/js/hospital.js"></script>
 
-<h1>
-    24 hour hospital
-</h1>
+<h1>지역별 동물병원 검색</h1>
 
-<h1 class="message">
-    24 시간 병원
-</h1>
+<hr>
 
-<div class="message2 cursor-pointer" th:text="${message}"></div>
+<!-- 시 선택 셀렉트 박스 -->
+<label for="city-select">시/도를 선택하세요 : </label>
+<select id="city-select" onchange="loadCounties()">
+    <option value="">시/도 선택</option>
+</select>
 
-<!-- Google Maps API를 불러오는 스크립트 -->
+<!-- 군/구 선택 셀렉트 박스 -->
+<label for="county-select">시/군/구를 선택하세요 : </label>
+<select id="county-select">
+    <option value="">시/군/구 선택</option>
+</select>
+
+<button onclick="geocodeAddress()">검색</button>
+
+<hr>
+
+<!--&lt;!&ndash; Google Maps API를 불러오는 스크립트 &ndash;&gt;-->
+<!--<script async defer-->
+<!--        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">-->
+<!--</script>-->
+
+<!--&lt;!&ndash; MarkerClusterer 라이브러리 추가 &ndash;&gt;-->
+<!--<script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script>-->
+
+<!--&lt;!&ndash; 지도를 표시할 div &ndash;&gt;-->
+<!--<div id="map"></div>-->
+
+<!-- 지도 표시할 div -->
+<div id="map" style="height: 500px; width: 100%;"></div>
+
+<!-- Google Maps API 호출 -->
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
-</script>
+        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+<!-- &libraries=places -->
 
-<!-- 지도를 표시할 div -->
-<div id="map"></div>
+<!-- JavaScript 파일 불러오기 -->
+<script src="/resource/js/hospital.js"></script> <!-- JS 파일 경로 -->
+
 
 </body>
 </html>

@@ -12,7 +12,7 @@ public interface MissingRepository {
             SELECT id
                      FROM missing
                      ORDER BY id DESC
-                     LIMIT 0, 1;		
+                     LIMIT 0, 1;
                      	""")
     Integer lastNumber();
 
@@ -27,7 +27,7 @@ public interface MissingRepository {
             color = #{color},
             gender = #{gender},
             age = #{age},
-            RFID = COALESCE(#{rfid},"없음"),    
+            RFID = COALESCE(#{rfid},"없음"),
             photo = #{photoPath},
             trait = #{trait}
               			""")
@@ -40,18 +40,18 @@ public interface MissingRepository {
 				""")
     int totalCnt(String str);
 
-    @Select("""        
+    @Select("""
 			SELECT S.*, M.name AS extra__ownerName, M.cellphoneNum AS extra__ownerCellphoneNum
         	FROM missing S
         	LEFT JOIN `member` M
         	ON M.id = S.memberId
         	WHERE S.missingLocation LIKE CONCAT('%', #{str}, '%') OR #{str} = '전체'
        	    ORDER BY S.id DESC
-        	LIMIT #{limitFrom}, #{itemsInAPage}        
+        	LIMIT #{limitFrom}, #{itemsInAPage}
         		""")
     List<Missing> list(int limitFrom, int itemsInAPage, String str);
 
-    @Select("""        
+    @Select("""
 			SELECT S.*, M.name AS extra__ownerName, M.cellphoneNum AS extra__ownerCellphoneNum
         	FROM missing S
         	LEFT JOIN `member` M
@@ -61,7 +61,7 @@ public interface MissingRepository {
     Missing missingArticle(int missingId);
 
     @Delete("""
-            DELETE FROM missing 
+            DELETE FROM missing
             WHERE id = #{missingId}
                 """)
     void missingDelete(int missingId);
