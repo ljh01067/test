@@ -38,7 +38,7 @@ public interface DiaryRepository {
             startDate = #{startDate},
             endDate = #{endDate},
             takingTime = #{takingTime},
-            information = #{information}
+            information = #{information}	
             """)
 	void writeDiary(int memberId, String title, String body, String imagePath,
 					LocalDate startDate, LocalDate endDate,
@@ -75,4 +75,14 @@ public interface DiaryRepository {
             """)
 	List<Diary> getDiary();
 
+	@Select("""
+        SELECT D.*, M.nickname AS extra__writer
+            FROM diary AS D
+            INNER JOIN `member` AS M
+            ON D.memberId = M.id
+            ORDER BY D.id asc 		
+""")
+	List<Diary> getrecentDiary();
+
+	long count();
 }

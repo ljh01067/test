@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.project.tailsroute.vo.Rq;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/usr/diary")
@@ -25,6 +26,7 @@ public class UsrDiaryController {
     private DiaryService diaryService;
     private ResourceLoader resourceLoader;
     private final Rq rq;
+    private Date regDate;
 
     public UsrDiaryController(Rq rq) {
         this.rq = rq;
@@ -32,9 +34,16 @@ public class UsrDiaryController {
 
     @GetMapping("/write")
     public String showWriteForm(Model model) {
-        boolean isLogined = rq.isLogined();
+          boolean isLogined = rq.isLogined();
 
-        if (!isLogined) {
+        if (isLogined) {
+            Member member = rq.getLoginedMember();
+            model.addAttribute("member", member);
+        }
+        model.addAttribute("isLogined", isLogined);
+
+
+     /*   if (!isLogined) {
             // 로그인되지 않은 경우 로그인 페이지로 리다이렉트
             return "redirect:/usr/member/login";
         } else {
@@ -42,10 +51,10 @@ public class UsrDiaryController {
             Member member = rq.getLoginedMember();
             model.addAttribute("member", member);
             model.addAttribute("isLogined", true);
-        }
-
+        }*/
         return "usr/diary/write"; // 다이어리 작성 페이지로 이동
     }
+
 
     @PostMapping("/write")
     public String submitDiary(
@@ -53,12 +62,19 @@ public class UsrDiaryController {
             @RequestParam("title") String title,
             @RequestParam("body") String body,
             @RequestParam("file") MultipartFile file,
-            @RequestParam("startDate") LocalDate startDate,
-            @RequestParam("endDate") LocalDate endDate,
+            @RequestParam("startDate") String startDateStr, // String으로 받아오기
+            @RequestParam("endDate") String endDateStr, // String으로 받아오기
             @RequestParam("takingTime") LocalTime takingTime,
             @RequestParam("information") String information
     ) {
         boolean isLogined = rq.isLogined();
+
+        // DateTimeFormatter 정의
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // String을 LocalDate로 변환
+        LocalDate startDate = LocalDate.parse(startDateStr, formatter);
+        LocalDate endDate = LocalDate.parse(endDateStr, formatter);
 
         String imagePath;
 
@@ -96,11 +112,20 @@ public class UsrDiaryController {
     }
     @GetMapping("/list")
     public String showDiaryList(Model model) {
+        boolean isLogined = rq.isLogined();
+
+        if (isLogined) {
+            Member member = rq.getLoginedMember();
+            model.addAttribute("member", member);
+        }
+        model.addAttribute("isLogined", isLogined);
+
         List<Diary> diaries = diaryService.getDiaryList();
+
         model.addAttribute("diaries", diaries);
         return "usr/diary/list";
     }
 
-  
+
 
 }

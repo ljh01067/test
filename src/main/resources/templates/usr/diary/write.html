@@ -1,4 +1,6 @@
+<div class = "header">
 <th:block th:replace="usr/common/head"/>
+</div>
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
@@ -11,16 +13,17 @@
     <link href="https://unpkg.com/@fullcalendar/daygrid@5.10.1/main.css" rel="stylesheet" />
     <script src="https://unpkg.com/@fullcalendar/core@5.10.1/main.js"></script>
     <script src="https://unpkg.com/@fullcalendar/daygrid@5.10.1/main.js"></script>
+
 </head>
 
 <body >
 
 
-<form action="/usr/diary/write" method="post" enctype="multipart/form-data">
+<form  id = "diaryContent" action="/usr/diary/write" method="post" enctype="multipart/form-data">
     <input type="hidden" name="memberId" value="1" >
 
-    <div class="flex items-center justify-center ">
-        <input type="text" name="title" placeholder="제목을 입력해주세요." class="input-hidden">
+    <div class="flex items-center justify-center  ">
+        <input type="text" name="title" placeholder="제목을 입력해주세요." class="input-hidden ">
     </div>
 
     <div class="upload-container text-center mb-6">
