@@ -1,0 +1,50 @@
+<th:block th:replace="usr/common/head"/>
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" type="text/css" th:href="@{/main.css}">
+<!--켈린더.js 사용경로적용-->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+<!--켈린더 css 경로적용-->
+<link rel="stylesheet" href="/resource/css/calender.css">
+<head>
+    <meta charset="UTF-8">
+    <title>PetdiaryList</title>
+</head>
+<body>
+<!--켈린더 불러오기-->
+<h1>켈린더</h1>
+<div id="calendar"></div>
+<script src="/resource/js/calender.js"></script>
+<h2>일지작성 리스트</h2>
+<div class="p-4">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">번호</th>
+            <th scope="col">작성일</th>
+            <th scope="col">제목</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td>2024.10.07</td>
+            <td>제목1</td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td colspan="2">Larry the Bird</td>
+            <td>@twitter</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

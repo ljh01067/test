@@ -11,7 +11,5 @@ public class UsrHospitalController {
     public String showMain(Model model) {
         model.addAttribute("message", "24시간 병원 message 추가");
         return "usr/map/hospital";
-
     }
-
 }
