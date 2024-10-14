@@ -11,8 +11,7 @@
     <img class="main_image" th:src="@{/resource/photo/main.png}" alt="">
     <div class="main_text tw-absolute">
         <div>TailsRoute는 반려견의 실종 신고, 건강 관리, 훈련 추천, 커뮤니티 정보 교환 등을 제공하는 종합 케어 플랫폼입니다.</div>
-        <a class="main_button" th:href="@{../hospital/main}">24시간 병원 안내</a>
-
+        <button class="main_button ">24시간 병원 안내</button>
     </div>
 </div>
 <div class="main_box tw-relative">
@@ -51,16 +50,17 @@
         전송할 수 있습니다.
     </div>
     <div class="slider_wrapper">
-        <button class="slider_btn left_btn">&#10094;</button> <!-- 왼쪽 버튼 -->
+        <button class="slider_btn left_btn">&#10094;</button>
         <div class="slider_container">
             <a class="misssing_item" th:href="@{'../missing/detail?missingId='+${missing.id}}"
                th:each="missing : ${missings}">
                 <img th:src="@{${missing.photo}}" alt="Missing Image" class="misssing_image"/>
             </a>
         </div>
-        <button class="slider_btn right_btn">&#10095;</button> <!-- 오른쪽 버튼 -->
+        <button class="slider_btn right_btn">&#10095;</button>
     </div>
 </div>
+<!--<div class="left_box"></div>
+<div class="right_box"></div>-->
 </body>
 </html>
-
