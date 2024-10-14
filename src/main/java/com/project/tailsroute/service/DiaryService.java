@@ -30,8 +30,10 @@ public class DiaryService {
     }
 
     public List<Diary> getDiaryList() {
+
         return diaryRepository.getDiary();
     }
+
 
 
 }

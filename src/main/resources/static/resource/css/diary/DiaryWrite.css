@@ -122,3 +122,9 @@ body {
     height: 50px;
 
 }
+.header{
+    display: block;
+}
+#diaryContent{
+    padding-top: 70px;
+}
