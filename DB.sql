@@ -35,8 +35,8 @@ INSERT INTO `member` SET
 INSERT INTO `member` SET
     regDate = '2024-01-10 10:30:00',
                          updateDate = '2024-02-10 12:00:00',
-                         loginId = 'user01',
-                         loginPw = 'pw_hash1',
+                         loginId = 'test1',
+                         loginPw = 'test1',
                          authLevel = 3,
                          `name` = '김서준',
                          nickname = '콩이의대장',
