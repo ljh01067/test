@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.4/tailwind.min.css">
 
     <!--  헤더 파일 추가  -->
-    <!--    <th:block th:include="usr/common/head :: header"></th:block>-->
+<!--    <th:block th:include="usr/common/head :: header"></th:block>-->
+<!--    <th:block th:replace="usr/common/head"/>-->
 
 </head>
 <body>
@@ -37,16 +38,28 @@
 
 <hr>
 
-<!-- Google Maps API를 불러오는 스크립트 -->
+<!--&lt;!&ndash; Google Maps API를 불러오는 스크립트 &ndash;&gt;-->
+<!--<script async defer-->
+<!--        src="https://maps.googleapis.com/maps/api/js?key=REDACTED&libraries=places">-->
+<!--</script>-->
+
+<!--&lt;!&ndash; MarkerClusterer 라이브러리 추가 &ndash;&gt;-->
+<!--<script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script>-->
+
+<!--&lt;!&ndash; 지도를 표시할 div &ndash;&gt;-->
+<!--<div id="map"></div>-->
+
+<!-- 지도 표시할 div -->
+<div id="map" style="height: 500px; width: 100%;"></div>
+
+<!-- Google Maps API 호출 (callback=initMap으로 JS의 initMap 함수 호출) -->
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=REDACTED&callback=initMap">
-</script>
+        src="https://maps.googleapis.com/maps/api/js?key=REDACTED"></script>
+<!-- &libraries=places -->
 
-<!-- MarkerClusterer 라이브러리 추가 -->
-<script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script>
+<!-- JavaScript 파일 불러오기 -->
+<script src="/resource/js/hospital.js"></script> <!-- JS 파일 경로 -->
 
-<!-- 지도를 표시할 div -->
-<div id="map"></div>
 
 </body>
 </html>
