@@ -16,4 +16,5 @@ public class Essentials {
     private String purchaseDate;
     private int usageCycle;
     private int timing;
+    private int purchaseStatus;
 }
