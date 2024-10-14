@@ -86,7 +86,7 @@ public class UsrDogController {
 
                 photoPath = "/resource/photo/dog" + id + ".png"; // 웹에서 접근할 수 있는 경로
             } catch (IOException e) {
-                return "redirect:/usr/missing/modify?missingId="+id;
+                return "redirect:/usr/home/main;";
             }
             // 데이터베이스에 반려견 정보 수정
             dogService.modify(id, dogName, dogWeight, dogType, photoPath);
