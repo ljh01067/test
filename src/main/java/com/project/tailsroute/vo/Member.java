@@ -23,6 +23,8 @@ public class Member {
     private boolean delStatus;
     private String delDate;
 
+    private String extra__dogPoto;
+
 
     public boolean isAdmin() {
         return this.authLevel == 7;
