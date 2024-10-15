@@ -64,7 +64,35 @@ function loadCounties() {
     }
 }
 
-// 선택된 시/군/구를 좌표로 변환하여 지도 중심 이동
+
+// 전역 변수로 선언된 map이 이미 존재할 경우 중복 선언하지 않음
+if (typeof map === 'undefined') {
+    var map;  // let 대신 var로 전역 변수 선언을 수정하여 재선언 방지
+}
+
+if (typeof service === 'undefined') {
+    var service;
+}
+
+async function initMap() {
+    // Google Maps와 Places 라이브러리를 비동기로 불러옴
+    const { Map } = await google.maps.importLibrary("maps");
+    const { Place, SearchNearbyRankPreference } = await google.maps.importLibrary("places");
+
+    // 지도 중심 좌표 설정 (서울)
+    let center = new google.maps.LatLng(37.5665, 126.9780);
+
+    // 지도를 초기화합니다.
+    map = new Map(document.getElementById("map"), {
+        center: center,
+        zoom: 14,
+        mapId: "d46969492471ae84",
+    });
+}
+
+
+
+// 신) 사용자가 시/군/구를 선택하여 주소를 좌표로 변환
 function geocodeAddress() {
     const selectedCity = document.getElementById('city-select').value;
     const selectedCounty = document.getElementById('county-select').value;
@@ -80,9 +108,9 @@ function geocodeAddress() {
     // 주소 값을 콘솔에 출력하여 확인
     console.log("Geocoding 주소:", address);
 
-    geocoder.geocode({'address': address}, function (results, status) {
-        if (status === 'OK' && results[0]) {
-            // map.setCenter(results[0].geometry.location);
+    geocoder.geocode({ address }, function (results, status) {
+        if (status === 'OK') {
+
             const location = results[0].geometry.location;  // 위치 정보 가져오기
 
             const lat = location.lat();
@@ -99,159 +127,100 @@ function geocodeAddress() {
                 console.error('위도 및 경도 값이 null입니다.');
             }
 
-            // 전체 location 객체를 콘솔에 출력하여 구조 확인
-            // console.log("Geocoded location object:", location);
-
-            // 콘솔에 location 값 출력 (위도 및 경도 값 확인)
-            // console.log("Geocoded location (lat, lng):", location.lat, location.lng);
-
-            // map.setCenter(location);
-            // map.setZoom(14);  // 줌 설정
-
-            // 동물 병원 검색 (Google Places API 사용)
-            // findAnimalHospitals(location);
         } else {
-            console.error('Geocode 실패: ' + status);
-            alert('Geocode 실패: ' + status);
+            alert("주소 변환 실패: " + status);
         }
     });
 }
 
-function findAnimalHospitals(location) {
-    const lat = location.lat();
-    const lng = location.lng();
 
-    // const apiKey = 'YOUR_API_KEY';  // 본인의 API 키 입력
+//신
 
-    const radius = 5000;  // 검색 반경 (단위: 미터)
-    const type = 'veterinary_care';  // 동물 병원 검색
+// 동물 병원을 찾는 함수 (Places API - New 사용)
+async function findAnimalHospitals(location) {
+    const { Place, SearchNearbyRankPreference } = await google.maps.importLibrary("places");
+    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
-    // 클라이언트에서 직접 호출
-    // const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=${radius}&type=${type}&key=${apiKey}`;
+    const request = {
+        // 검색할 위치와 반경 설정
+        fields: ["displayName", "location", "businessStatus"],
+        locationRestriction: {
+            center: location,
+            radius: 5000,  // 반경 5km 내에서 검색
+        },
+        includedPrimaryTypes: ["veterinary_care"],  // 동물 병원 검색
+        maxResultCount: 10,  // 최대 결과 10개
+        rankPreference: SearchNearbyRankPreference.POPULARITY,  // 인기순 정렬
+    };
 
-    // 서버 측에서 Google Places API 호출
-    const url = `/api/places?location=${lat},${lng}&radius=${radius}&type=${type}`;
+    try {
+        const { places } = await Place.searchNearby(request);  // 장소 검색
 
-    // Fetch API를 사용하여 HTTP 요청 보내기
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'OK') {
-                data.results.forEach(place => {
-                    createMarker(place);
+        if (places.length) {
+            const { LatLngBounds } = await google.maps.importLibrary("core");
+            const bounds = new LatLngBounds();
+
+            // 검색된 장소마다 마커 생성
+            places.forEach((place) => {
+                const marker = new AdvancedMarkerElement({
+                    map,
+                    position: place.location,  // 장소 위치에 마커 설정
+                    title: place.displayName,  // 마커 제목 설정
                 });
-            } else {
-                console.error('Places API 검색 실패: ', data.status);
-            }
-        })
-        .catch(error => console.error('Places API 요청 실패: ', error));
-}
+                bounds.extend(place.location);  // 장소 위치를 지도에 맞춰 확장
+            });
 
-// // Google Places API (New)를 사용한 동물 병원 검색 함수
-// function findAnimalHospitals(location) {
-//     const lat = location.lat();
-//     const lng = location.lng();
-//
-//     const apiKey = 'YOUR_API_KEY'; // 본인의 API 키 입력
-//     const radius = 5000; // 검색 반경 (단위: 미터)
-//     const type = 'veterinary_care'; // 동물 병원 검색
-//
-// // Places API (New) 요청 URL
-//     const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=${radius}&type=${type}&key=${apiKey}`;
-//
-// // Fetch API를 사용하여 HTTP 요청 보내기
-//     fetch(url)
-//         .then(response => response.json())
-//         .then(data => {
-//             if (data.status === 'OK') {
-//                 // 검색 결과를 처리하여 마커 생성
-//                 data.results.forEach(place => {
-//                     createMarker(place);
-//                 });
-//             } else {
-//                 console.error('Places API 검색 실패: ', data.status);
-//             }
-//         })
-//         .catch(error => console.error('Places API 요청 실패: ', error));
-// }
-
-// 검색된 병원 정보를 기반으로 마커를 생성하는 함수
-function createMarker(place) {
-    const marker = new google.maps.Marker({
-        map: map,
-        position: {lat: place.geometry.location.lat, lng: place.geometry.location.lng},
-        title: place.name
-    });
-
-    // 마커 클릭 시 병원 이름을 표시
-    google.maps.event.addListener(marker, 'click', function () {
-        alert(place.name);
-    });
-}
-
-// 전역 변수로 선언된 map이 이미 존재할 경우 중복 선언하지 않음
-if (typeof map === 'undefined') {
-    var map;  // let 대신 var로 전역 변수 선언을 수정하여 재선언 방지
-}
-
-if (typeof service === 'undefined') {
-    var service;
-}
-
-// Google Maps 초기화 함수
-function initMap() {
-    // 지도 표시할 div 요소 가져오기
-    const mapDiv = document.getElementById("map");
-
-    if (mapDiv) {
-        // map 객체 초기화
-        map = new google.maps.Map(mapDiv, {
-            center: {lat: 37.5665, lng: 126.9780},  // 서울 좌표
-            zoom: 12  // 확대 수준 설정
-        });
-
-    } else {
-        console.error("Map div is not found or not initialized correctly.");
+            map.fitBounds(bounds);  // 검색된 장소에 맞게 지도 범위 조정
+        } else {
+            console.log("검색 결과가 없습니다.");
+        }
+    } catch (error) {
+        console.error("Nearby Search 오류 발생:", error);
     }
 }
 
-// // Google Maps 초기화 함수 추가
-// function initMap() {
-//
-//     // 지도를 표시할 #map 요소를 찾음
-//     const mapDiv = document.getElementById("map");
-//
-//     // #map 요소가 존재할 때에만 실행
-//     if (mapDiv) {
-//         // 지도 초기화: 서울 중심으로 설정
-//         const map = new google.maps.Map(mapDiv, {
-//             center: {lat: 37.5665, lng: 126.9780},  // 서울 좌표
-//             zoom: 12  // 확대 수준 설정
-//         });
-//
-//         // 마커를 찍을 위치 목록 (위도, 경도와 설명을 배열로 설정)
-//         const locations = [
-//             {lat: 37.5665, lng: 126.9780, title: "서울"},
-//             {lat: 37.5700, lng: 126.9820, title: "서울 북쪽"},
-//             {lat: 37.5500, lng: 126.9900, title: "서울 남쪽"},
-//             {lat: 37.5300, lng: 126.9700, title: "서울 서쪽"},
-//             {lat: 37.5800, lng: 126.9850, title: "서울 동쪽"}
-//         ];
-//
-//         // 마커 생성
-//         const markers = locations.map(location => {
-//             return new google.maps.Marker({
-//                 position: {lat: location.lat, lng: location.lng},
-//                 title: location.title
-//             });
-//         });
-//
-//         // 마커 클러스터링 적용
-//         new MarkerClusterer(map, markers, {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-//     }
-// }
+// 시 데이터를 서버에서 로드
+function loadCities() {
+    $.ajax({
+        url: '/cities',
+        method: 'GET',
+        success: function (cities) {
+            const citySelect = document.getElementById('city-select');
+            citySelect.innerHTML = '<option value="">시 선택</option>';
+            cities.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city;
+                option.text = city;
+                citySelect.appendChild(option);
+            });
+        }
+    });
+}
 
-// DOM이 완전히 로드된 후 initMap 호출
-// document.addEventListener('DOMContentLoaded', function () {
-//     initMap();
-// });
+// 시 선택 시 군/구 데이터를 서버에서 로드
+function loadCounties() {
+    const selectedCity = document.getElementById('city-select').value;
+    const countySelect = document.getElementById('county-select');
+
+    if (!selectedCity) {
+        countySelect.innerHTML = '<option value="">군/구 없음</option>';
+        return;
+    }
+
+    $.ajax({
+        url: '/counties',
+        method: 'GET',
+        data: { city: selectedCity },
+        success: function (counties) {
+            countySelect.innerHTML = counties.length
+                ? counties.map(county => `<option value="${county}">${county}</option>`).join('')
+                : '<option value="">군/구 없음</option>';
+        }
+    });
+}
+
+// 페이지 로드 시 시/군/구 데이터를 Ajax로 로드
+document.addEventListener('DOMContentLoaded', () => {
+    initMap();
+    loadCities();  // 시 데이터를 로드
+});
